@@ -13,13 +13,24 @@ export default class TodoList extends React.Component {
     };
   }
 
+  addTodo(todo) {
+    this.setState({ todos: this.state.todos.concat(todo) });
+  }
+
+  deleteTodo(todo) {
+    this.setState({ todos: this.state.todos.filter(t => t !== todo) });
+  }
+
   render() {
     return (
       <div>
         <h2>Todos</h2>
         <ul>
-          {this.state.todos.map(todo => <li key={todo}>{todo}</li>)}
+          {this.state.todos.map(todo => (
+            <li key={todo} onClick={() => this.deleteTodo(todo)}>{todo}</li>
+          ))}
         </ul>
+        <input onKeyPress={e => e.key === 'Enter' && this.addTodo(e.target.value)} />
       </div>
     );
   }
