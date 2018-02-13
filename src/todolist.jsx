@@ -29,12 +29,18 @@ export default class TodoList extends React.Component {
     };
   }
 
-  addTodo(todo) {
-    this.setState({ todos: this.state.todos.concat(todo) });
+  addTodo(label) {
+    this.setState({
+      todos: this.state.todos.concat({
+        id: Math.random(),
+        label,
+        done: false,
+      }),
+    });
   }
 
-  deleteTodo(todo) {
-    this.setState({ todos: this.state.todos.filter(t => t !== todo) });
+  deleteTodo(id) {
+    this.setState({ todos: this.state.todos.filter(t => t.id !== id) });
   }
 
   toggleTodo(id) {
@@ -65,7 +71,7 @@ export default class TodoList extends React.Component {
               />
               {todo.label}
             </label>
-            <span onClick={() => this.deleteTodo(todo)}>[X]</span>
+            <span onClick={() => this.deleteTodo(todo.id)}>[X]</span>
           </li>
           ))}
         </ul>
