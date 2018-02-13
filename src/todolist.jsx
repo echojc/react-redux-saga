@@ -42,7 +42,7 @@ class TodoList extends React.Component {
             {...todo}
           />)}
         </ul>
-        <input onKeyPress={e => e.key === 'Enter' && this.addTodo(e.target.value)} />
+        <input onKeyPress={e => e.key === 'Enter' && this.props.addTodo(e.target.value)} />
       </div>
     );
   }
@@ -54,4 +54,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(TodoList);
+function mapDispatchToProps(dispatch) {
+  return {
+    addTodo(label) {
+      dispatch({ type: 'ADD_TODO', label });
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
