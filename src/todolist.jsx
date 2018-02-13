@@ -4,21 +4,6 @@ import { connect } from 'react-redux';
 import Todo from './todo';
 
 class TodoList extends React.Component {
-  deleteTodo(id) {
-    this.setState({ todos: this.state.todos.filter(t => t.id !== id) });
-  }
-
-  toggleTodo(id) {
-    const { todos } = this.state;
-    const index = todos.findIndex(t => t.id === id);
-    const todo = todos[index];
-    const updated = {
-      ...todo,
-      done: !todo.done,
-    };
-    this.setState({ todos: [].concat(todos.slice(0, index), updated, todos.slice(index + 1)) });
-  }
-
   render() {
     return (
       <div>
@@ -27,8 +12,8 @@ class TodoList extends React.Component {
           {this.props.todos.map(todo =>
           <Todo
             key={todo.id}
-            onToggle={this.toggleTodo.bind(this)}
-            onDelete={this.deleteTodo.bind(this)}
+            onToggle={this.props.toggleTodo}
+            onDelete={this.props.deleteTodo}
             {...todo}
           />)}
         </ul>
@@ -48,6 +33,12 @@ function mapDispatchToProps(dispatch) {
   return {
     addTodo(label) {
       dispatch({ type: 'ADD_TODO', label });
+    },
+    deleteTodo(id) {
+      dispatch({ type: 'DELETE_TODO', id });
+    },
+    toggleTodo(id) {
+      dispatch({ type: 'TOGGLE_TODO', id });
     },
   };
 }
