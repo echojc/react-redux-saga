@@ -4,16 +4,6 @@ import { connect } from 'react-redux';
 import Todo from './todo';
 
 class TodoList extends React.Component {
-  addTodo(label) {
-    this.setState({
-      todos: this.state.todos.concat({
-        id: Math.random(),
-        label,
-        done: false,
-      }),
-    });
-  }
-
   deleteTodo(id) {
     this.setState({ todos: this.state.todos.filter(t => t.id !== id) });
   }

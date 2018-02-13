@@ -24,5 +24,17 @@ const defaultState = {
 };
 
 export default function reducer(state = defaultState, action) {
-  return state;
+  switch (action.type) {
+    case 'ADD_TODO':
+      return {
+        ...state,
+        todos: state.todos.concat({
+          id: Math.random(),
+          label: action.label,
+          done: false,
+        }),
+      };
+    default:
+      return state;
+  }
 }
