@@ -27,7 +27,12 @@ export default class TodoList extends React.Component {
         <h2>Todos</h2>
         <ul>
           {this.state.todos.map(todo => (
-            <li key={todo} onClick={() => this.deleteTodo(todo)}>{todo}</li>
+          <li
+            key={todo}
+          >
+            {todo}
+            <span onClick={() => this.deleteTodo(todo)}>[X]</span>
+          </li>
           ))}
         </ul>
         <input onKeyPress={e => e.key === 'Enter' && this.addTodo(e.target.value)} />
