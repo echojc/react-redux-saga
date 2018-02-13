@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Todo from './todo';
+
 export default class TodoList extends React.Component {
   constructor(props) {
     super(props);
@@ -72,17 +74,3 @@ export default class TodoList extends React.Component {
     );
   }
 }
-
-const Todo = ({ id, label, done, onToggle, onDelete }) => (
-  <li>
-    <label>
-      <input
-        type="checkbox"
-        checked={done}
-        onChange={() => onToggle(id)}
-      />
-      {label}
-    </label>
-    <span onClick={() => onDelete(id)}>[X]</span>
-  </li>
-);
