@@ -1,36 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Todo from './todo';
 
-export default class TodoList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      todos: [
-        {
-          id: 1,
-          label: 'bootstrap a single page app',
-          done: true,
-        },
-        {
-          id: 2,
-          label: 'learn about react',
-          done: false,
-        },
-        {
-          id: 3,
-          label: 'encroach upon redux territory',
-          done: false,
-        },
-        {
-          id: 4,
-          label: 'tell of epics and sagas',
-          done: false,
-        }
-      ],
-    };
-  }
-
+class TodoList extends React.Component {
   addTodo(label) {
     this.setState({
       todos: this.state.todos.concat({
@@ -61,7 +34,7 @@ export default class TodoList extends React.Component {
       <div>
         <h2>Todos</h2>
         <ul>
-          {this.state.todos.map(todo =>
+          {this.props.todos.map(todo =>
           <Todo
             key={todo.id}
             onToggle={this.toggleTodo.bind(this)}
@@ -74,3 +47,11 @@ export default class TodoList extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    todos: state.todos,
+  };
+}
+
+export default connect(mapStateToProps)(TodoList);
