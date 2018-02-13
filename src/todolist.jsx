@@ -30,7 +30,7 @@ export default class TodoList extends React.Component {
           <li
             key={todo}
           >
-            {todo}
+            <label><input type="checkbox" />{todo}</label>
             <span onClick={() => this.deleteTodo(todo)}>[X]</span>
           </li>
           ))}
