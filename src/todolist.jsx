@@ -59,24 +59,28 @@ export default class TodoList extends React.Component {
       <div>
         <h2>Todos</h2>
         <ul>
-          {this.state.todos.map(todo => (
-          <li
-            key={todo.id}
-          >
-            <label>
-              <input
-                type="checkbox"
-                checked={todo.done}
-                onChange={() => this.toggleTodo(todo.id)}
-              />
-              {todo.label}
-            </label>
-            <span onClick={() => this.deleteTodo(todo.id)}>[X]</span>
-          </li>
-          ))}
+          {this.state.todos.map(todo => <Todo {...todo} />)}
         </ul>
         <input onKeyPress={e => e.key === 'Enter' && this.addTodo(e.target.value)} />
       </div>
+    );
+  }
+}
+
+class Todo extends React.Component {
+  render() {
+    return (
+      <li key={this.props.id}>
+        <label>
+          <input
+            type="checkbox"
+            checked={this.props.done}
+            onChange={() => this.toggleTodo(this.props.id)}
+          />
+          {this.props.label}
+        </label>
+        <span onClick={() => this.deleteTodo(this.props.id)}>[X]</span>
+      </li>
     );
   }
 }
