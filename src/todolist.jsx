@@ -3,25 +3,21 @@ import { connect } from 'react-redux';
 
 import Todo from './todo';
 
-class TodoList extends React.Component {
-  render() {
-    return (
-      <div>
-        <h2>Todos</h2>
-        <ul>
-          {this.props.todos.map(todo =>
-          <Todo
-            key={todo.id}
-            onToggle={this.props.toggleTodo}
-            onDelete={this.props.deleteTodo}
-            {...todo}
-          />)}
-        </ul>
-        <input onKeyPress={e => e.key === 'Enter' && this.props.addTodo(e.target.value)} />
-      </div>
-    );
-  }
-}
+const TodoList = ({ todos, addTodo, deleteTodo, toggleTodo }) => (
+  <div>
+    <h2>Todos</h2>
+    <ul>
+      {todos.map(todo =>
+      <Todo
+        key={todo.id}
+        onToggle={toggleTodo}
+        onDelete={deleteTodo}
+        {...todo}
+      />)}
+    </ul>
+    <input onKeyPress={e => e.key === 'Enter' && addTodo(e.target.value)} />
+  </div>
+);
 
 function mapStateToProps(state) {
   return {
