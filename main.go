@@ -28,10 +28,12 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		wait()
 		sendState(w, todos)
 	})
 
 	http.HandleFunc("/add", func(w http.ResponseWriter, r *http.Request) {
+		wait()
 		label := readBody(r)
 		todos = append(todos, Item{
 			ID:    strconv.Itoa(rand.Int()),
@@ -42,6 +44,7 @@ func main() {
 	})
 
 	http.HandleFunc("/delete", func(w http.ResponseWriter, r *http.Request) {
+		wait()
 		id := readBody(r)
 		j := 0
 		for i := range todos {
@@ -55,6 +58,7 @@ func main() {
 	})
 
 	http.HandleFunc("/toggle", func(w http.ResponseWriter, r *http.Request) {
+		wait()
 		id := readBody(r)
 		for i := range todos {
 			if todos[i].ID == id {
@@ -65,6 +69,10 @@ func main() {
 	})
 
 	log.Fatal(http.ListenAndServe(":8899", nil))
+}
+
+func wait() {
+	<-time.After(time.Second)
 }
 
 func readBody(r *http.Request) string {
