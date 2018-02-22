@@ -5,30 +5,13 @@ import Todo from './todo';
 export default class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      todos: [
-        {
-          id: 1,
-          label: 'bootstrap a single page app',
-          done: true,
-        },
-        {
-          id: 2,
-          label: 'learn about react',
-          done: false,
-        },
-        {
-          id: 3,
-          label: 'encroach upon redux territory',
-          done: false,
-        },
-        {
-          id: 4,
-          label: 'tell of epics and sagas',
-          done: false,
-        }
-      ],
-    };
+    this.state = { todos: [] };
+    this.loadState();
+  }
+
+  async loadState() {
+    const res = await fetch('http://localhost:8899/');
+    this.setState({ todos: await res.json() });
   }
 
   addTodo(label) {
