@@ -14,29 +14,28 @@ export default class TodoList extends React.Component {
     this.setState({ todos: await res.json() });
   }
 
-  addTodo(label) {
-    this.setState({
-      todos: this.state.todos.concat({
-        id: Math.random(),
-        label,
-        done: false,
-      }),
+  async addTodo(label) {
+    const res = await fetch('http://localhost:8899/add', {
+      method: 'POST',
+      body: label,
     });
+    this.setState({ todos: await res.json() });
   }
 
-  deleteTodo(id) {
-    this.setState({ todos: this.state.todos.filter(t => t.id !== id) });
+  async deleteTodo(id) {
+    const res = await fetch('http://localhost:8899/delete', {
+      method: 'POST',
+      body: id,
+    });
+    this.setState({ todos: await res.json() });
   }
 
-  toggleTodo(id) {
-    const { todos } = this.state;
-    const index = todos.findIndex(t => t.id === id);
-    const todo = todos[index];
-    const updated = {
-      ...todo,
-      done: !todo.done,
-    };
-    this.setState({ todos: [].concat(todos.slice(0, index), updated, todos.slice(index + 1)) });
+  async toggleTodo(id) {
+    const res = await fetch('http://localhost:8899/toggle', {
+      method: 'POST',
+      body: id,
+    });
+    this.setState({ todos: await res.json() });
   }
 
   render() {
