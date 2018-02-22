@@ -15,6 +15,14 @@ export default class TodoList extends React.Component {
   }
 
   async addTodo(label) {
+    this.setState({
+      todos: this.state.todos.concat({
+        id: Math.random(),
+        label,
+        done: false,
+      }),
+    });
+
     const res = await fetch('http://localhost:8899/add', {
       method: 'POST',
       body: label,
@@ -23,6 +31,8 @@ export default class TodoList extends React.Component {
   }
 
   async deleteTodo(id) {
+    this.setState({ todos: this.state.todos.filter(t => t.id !== id) });
+
     const res = await fetch('http://localhost:8899/delete', {
       method: 'POST',
       body: id,
@@ -31,6 +41,15 @@ export default class TodoList extends React.Component {
   }
 
   async toggleTodo(id) {
+    const { todos } = this.state;
+    const index = todos.findIndex(t => t.id === id);
+    const todo = todos[index];
+    const updated = {
+      ...todo,
+      done: !todo.done,
+    };
+    this.setState({ todos: [].concat(todos.slice(0, index), updated, todos.slice(index + 1)) });
+
     const res = await fetch('http://localhost:8899/toggle', {
       method: 'POST',
       body: id,
