@@ -16,6 +16,7 @@ export default function reducer(state = defaultState, action) {
           id: Math.random(),
           label: action.label,
           done: false,
+          uncommitted: true,
         }),
       };
     case 'DELETE_TODO':

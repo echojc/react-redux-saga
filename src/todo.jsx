@@ -1,7 +1,12 @@
 import React from 'react';
 
-export default ({ id, label, done, onToggle, onDelete }) => (
-  <li>
+export default ({ id, label, done, uncommitted, onToggle, onDelete }) => (
+  <li
+    style={{
+      color: uncommitted && 'lightgrey',
+      fontStyle: uncommitted && 'italic',
+    }}
+  >
     <label>
       <input
         type="checkbox"
